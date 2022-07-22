@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
 import { Article } from './models/article.model';
 import { ArticleSection } from './models/article-section.model';
 import { Tag } from './models/tag';
 import { User } from './models/user.model';
+import { TagsController } from './controllers/tags/tags.controller';
+import { TagService } from './services/tag/tag.service';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { User } from './models/user.model';
     }),
     SequelizeModule.forFeature([Article, ArticleSection, Tag, User])
   ],
-  controllers: [],
-  providers: [AppService],
+  controllers: [TagsController],
+  providers: [TagService],
 })
 export class AppModule {}
