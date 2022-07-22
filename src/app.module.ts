@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
+import { Article } from './models/article.model';
+import { ArticleSection } from './models/article-section.model';
+import { Tag } from './models/tag';
+import { User } from './models/user.model';
 
 @Module({
   imports: [
@@ -14,10 +17,11 @@ import { ConfigModule } from '@nestjs/config';
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      models: [],
-    })
+      models: [Article, ArticleSection, Tag, User],
+    }),
+    SequelizeModule.forFeature([Article, ArticleSection, Tag, User])
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [AppService],
 })
 export class AppModule {}
