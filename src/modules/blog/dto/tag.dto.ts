@@ -1,4 +1,4 @@
-import { IsAlpha, IsString, MinLength } from 'class-validator';
+import { IsString, MinLength } from 'class-validator';
 
 const nameErrorContext = (message) => ({
   message,
@@ -10,7 +10,6 @@ const nameErrorContext = (message) => ({
 
 export class TagDTO {
   @MinLength(3, nameErrorContext('Tag name should be more than 3 characters'))
-  @IsAlpha(undefined, nameErrorContext('Tag name should contain numbers only'))
   @IsString(nameErrorContext('Tag name should be string'))
   name: string;
 }

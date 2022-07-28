@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Tag } from '@models/tag';
 import { TagDTO } from '../../dto/tag.dto';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class TagService {
@@ -9,8 +10,14 @@ export class TagService {
     @InjectModel(Tag) private tagModel: typeof Tag
   ) {}
 
-  searchTags(search: string = undefined) {
-    return this.tagModel.findAll()
+  searchTags(search: string = '') {
+    return this.tagModel.findAll({
+      where: {
+        name: {
+          [Op.iLike]: `%${search}%`
+        }
+      }
+    })
   }
 
   createTag(tag: TagDTO) {

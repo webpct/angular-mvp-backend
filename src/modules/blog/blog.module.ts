@@ -9,12 +9,13 @@ import { User } from '@models/user.model';
 import { AuthModule } from '../auth/auth.module';
 import { ArticlesController } from './controllers/articles/articles.controller';
 import { ArticleService } from './services/article/article.service';
+import { ArticlesTags } from '@models/article-tag.model';
 
 @Module({
   imports: [
     AuthModule,
     SequelizeModule,
-    SequelizeModule.forFeature([Article, ArticleSection, Tag, User]),
+    SequelizeModule.forFeature([Article, ArticleSection, Tag, User, ArticlesTags]),
   ],
   controllers: [TagsController, ArticlesController],
   providers: [TagService, ArticleService],

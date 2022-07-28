@@ -1,5 +1,5 @@
 import {
-  BelongsTo,
+  BelongsTo, BelongsToMany,
   Column,
   Default, ForeignKey,
   HasMany,
@@ -13,6 +13,8 @@ import {
 import { ArticleSection } from './article-section.model';
 import { v4 as uuidv4 } from 'uuid';
 import { User } from '@models/user.model';
+import { Tag } from '@models/tag';
+import { ArticlesTags } from '@models/article-tag.model';
 
 @Table({
   timestamps: false
@@ -44,4 +46,7 @@ export class Article extends Model {
 
   @HasMany(() => ArticleSection)
   sections: ArticleSection[]
+
+  @BelongsToMany(() => Tag, () => ArticlesTags)
+  tags: Tag[]
 }

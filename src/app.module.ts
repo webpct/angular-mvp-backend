@@ -9,6 +9,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { BlogModule } from './modules/blog/blog.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './modules/auth/guards/auth.guard';
+import { ArticlesTags } from '@models/article-tag.model';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { AuthGuard } from './modules/auth/guards/auth.guard';
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      models: [Article, ArticleSection, Tag, User],
+      models: [Article, ArticleSection, Tag, User, ArticlesTags],
     }),
     AuthModule,
     BlogModule

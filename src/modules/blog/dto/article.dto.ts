@@ -1,5 +1,5 @@
 import {
-  ArrayNotEmpty,
+  ArrayNotEmpty, ArrayUnique,
   IsArray,
   IsObject,
   IsString,
@@ -7,24 +7,36 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
+import { validate as validateUUID} from 'uuid';
 
 interface Section {
   title?: string,
   text: string
 }
 
-@ValidatorConstraint({ name: 'customText', async: false })
-export class CustomTextLength implements ValidatorConstraintInterface {
+@ValidatorConstraint({ name: 'Sections', async: false })
+export class SectionsLength implements ValidatorConstraintInterface {
   validate(value: Section, args: ValidationArguments) {
     if (value.title) {
       if (typeof value.title !== 'string' || value.title.length < 3) return false;
     }
-    if (!value.text || typeof value.text !== 'string' || value.text.length < 3) return false;
-    return true
+    return !(!value.text || typeof value.text !== 'string' || value.text.length < 3);
   }
 
   defaultMessage(args: ValidationArguments) {
     return ` Wrong sections structure. Interface is { title?: string, text: string }. title and text should be more than 3 characters`;
+  }
+}
+
+@ValidatorConstraint({ name: 'isUUID', async: false })
+export class IsUUID implements ValidatorConstraintInterface {
+  validate(value: string, args: ValidationArguments) {
+    console.log(value)
+    return validateUUID(value)
+  }
+
+  defaultMessage(args: ValidationArguments) {
+    return `tags is not UUID`;
   }
 }
 
@@ -41,7 +53,7 @@ export class ArticleDTO {
   @IsString(nameErrorContext('Tag name should be string'))
   title: string;
 
-  @Validate(CustomTextLength, [],{
+  @Validate(SectionsLength, [],{
     each: true,
   })
   @IsObject({
@@ -50,4 +62,10 @@ export class ArticleDTO {
   @ArrayNotEmpty()
   @IsArray()
   sections: Section[]
+
+  @Validate(IsUUID, {
+    each: true
+  })
+  @ArrayUnique()
+  tags: string[]
 }
