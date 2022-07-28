@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
-import { Article } from './models/article.model';
-import { ArticleSection } from './models/article-section.model';
-import { Tag } from './models/tag';
-import { User } from './models/user.model';
-import { TagsController } from './controllers/tags/tags.controller';
-import { TagService } from './services/tag/tag.service';
+import { Article } from '@models/article.model';
+import { ArticleSection } from '@models/article-section.model';
+import { Tag } from '@models/tag';
+import { User } from '@models/user.model';
+import { AuthModule } from './modules/auth/auth.module';
+import { BlogModule } from './modules/blog/blog.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './modules/auth/guards/auth.guard';
 
 @Module({
   imports: [
@@ -20,9 +22,13 @@ import { TagService } from './services/tag/tag.service';
       database: process.env.DATABASE_NAME,
       models: [Article, ArticleSection, Tag, User],
     }),
-    SequelizeModule.forFeature([Article, ArticleSection, Tag, User])
+    AuthModule,
+    BlogModule
   ],
-  controllers: [TagsController],
-  providers: [TagService],
+  controllers: [],
+  providers: [{
+    provide: APP_GUARD,
+    useClass: AuthGuard,
+  }],
 })
 export class AppModule {}

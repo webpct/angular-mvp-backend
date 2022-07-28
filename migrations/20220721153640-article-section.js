@@ -6,10 +6,9 @@ module.exports = {
       articleId: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
-        unique: true,
         references: {
           model: {
-            tableName: 'Article',
+            tableName: 'Articles',
             key: 'id'
           },
         },

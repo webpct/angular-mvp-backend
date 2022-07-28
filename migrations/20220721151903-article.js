@@ -6,11 +6,21 @@ module.exports = {
       id: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        primaryKey: true,
       },
       title: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
+      },
+      authorId: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
+        references: {
+          model: {
+            tableName: 'Users',
+            key: 'id'
+          },
+        },
       },
       createdAt: {
         type: Sequelize.DataTypes.DATE,

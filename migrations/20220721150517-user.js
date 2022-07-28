@@ -7,6 +7,7 @@ module.exports = {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
         unique: true,
+        primaryKey: true,
       },
       firstName: {
         type: Sequelize.DataTypes.STRING,
@@ -19,7 +20,16 @@ module.exports = {
       email: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
+        unique: true
       },
+      picture: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: true,
+      },
+      accessToken: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: true,
+      }
     });
   },
 

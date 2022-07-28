@@ -1,4 +1,4 @@
-import { MinLength, IsString, IsAlpha } from 'class-validator';
+import { IsAlpha, IsString, MinLength } from 'class-validator';
 
 const nameErrorContext = (message) => ({
   message,

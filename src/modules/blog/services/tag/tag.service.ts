@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Tag } from '../../models/tag';
+import { Tag } from '@models/tag';
 import { TagDTO } from '../../dto/tag.dto';
 
 @Injectable()

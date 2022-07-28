@@ -5,8 +5,8 @@ module.exports = {
     return queryInterface.createTable('Tags', {
       id: {
         type: Sequelize.DataTypes.STRING,
+        primaryKey: true,
         allowNull: false,
-        unique: true,
       },
       name: {
         type: Sequelize.DataTypes.STRING,
