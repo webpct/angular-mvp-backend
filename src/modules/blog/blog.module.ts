@@ -7,6 +7,8 @@ import { ArticleSection } from '@models/article-section.model';
 import { Tag } from '@models/tag';
 import { User } from '@models/user.model';
 import { AuthModule } from '../auth/auth.module';
+import { ArticlesController } from './controllers/articles/articles.controller';
+import { ArticleService } from './services/article/article.service';
 
 @Module({
   imports: [
@@ -14,7 +16,7 @@ import { AuthModule } from '../auth/auth.module';
     SequelizeModule,
     SequelizeModule.forFeature([Article, ArticleSection, Tag, User]),
   ],
-  controllers: [TagsController],
-  providers: [TagService],
+  controllers: [TagsController, ArticlesController],
+  providers: [TagService, ArticleService],
 })
 export class BlogModule {}

@@ -3,9 +3,14 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     return queryInterface.createTable('ArticleSections', {
+      id: {
+        type: Sequelize.DataTypes.STRING,
+        primaryKey: true,
+      },
       articleId: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
+        onDelete: 'CASCADE',
         references: {
           model: {
             tableName: 'Articles',

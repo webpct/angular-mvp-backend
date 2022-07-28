@@ -1,4 +1,14 @@
-import { Column, Default, IsEmail, IsUUID, Length, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import {
+  Column,
+  Default,
+  IsEmail,
+  IsUUID,
+  Length,
+  Model,
+  PrimaryKey,
+  Table,
+  Unique,
+} from 'sequelize-typescript';
 import { v4 as uuidv4 } from 'uuid';
 
 @Table({
