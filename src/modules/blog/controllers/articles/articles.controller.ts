@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { ArticleDTO } from '../../dto/article.dto';
 import { ArticleService } from '../../services/article/article.service';
 import { UserId } from '@decorators/user-id.decorator';
@@ -12,8 +12,11 @@ export class ArticlesController {
 
   @Get()
   @Public()
-  async get() {
-    return this.articleService.findAll();
+  async get(@Query('search') search: string, @Query('tags') tags: string[]) {
+    return this.articleService.findAll({
+      search,
+      tags
+    });
   }
 
   @Get(':id')

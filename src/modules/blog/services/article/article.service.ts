@@ -7,6 +7,12 @@ import { User } from '@models/user.model';
 import { Sequelize } from 'sequelize-typescript';
 import { Tag } from '@models/tag';
 import { ArticlesTags } from '@models/article-tag.model';
+import { literal, Op, WhereOptions } from 'sequelize';
+
+export interface FindAllOptions {
+  search: string,
+  tags: string[]
+}
 
 @Injectable()
 export class ArticleService {
@@ -18,9 +24,32 @@ export class ArticleService {
     private sequelize: Sequelize
   ) {}
 
-  async findAll() {
+  async findAll({ search = '', tags = [] }: FindAllOptions) {
+    const where: WhereOptions = {
+      title: {
+        [Op.iLike]: `%${search}%`
+      },
+    }
+    if (tags.length) {
+      where.id = {
+        [Op.in]: literal(`(
+            SELECT 
+              "ArticlesTags"."articleId"
+            FROM 
+              "Articles" 
+              INNER JOIN "ArticlesTags" ON "ArticlesTags"."articleId" = "id" 
+            WHERE 
+              "ArticlesTags"."tagId" IN (${tags.map(el => `'${el}'`)})
+          )`)
+      }
+    }
     const result = await this.articleModel.findAll({
-      include: [ArticleSection, User, Tag]
+      include: [
+        ArticleSection,
+        User,
+        Tag,
+      ],
+      where
     });
     return result || [];
   }
@@ -30,7 +59,6 @@ export class ArticleService {
       include: [ArticleSection, User, {
         model: Tag,
         attributes: ['name']
-
       }],
     });
     if (!article) throw new NotFoundException('Article with provided id not found');

@@ -31,7 +31,6 @@ export class SectionsLength implements ValidatorConstraintInterface {
 @ValidatorConstraint({ name: 'isUUID', async: false })
 export class IsUUID implements ValidatorConstraintInterface {
   validate(value: string, args: ValidationArguments) {
-    console.log(value)
     return validateUUID(value)
   }
 
