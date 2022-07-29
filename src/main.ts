@@ -9,7 +9,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Angular MVP')
-    .setDescription('The cats API description')
+    .setDescription('To access protected route, please visit auth page and sign in')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
