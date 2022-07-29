@@ -3,7 +3,9 @@ import { AuthGuard } from '@nestjs/passport';
 import { AuthRequest } from '../../models/auth-request';
 import { AuthResponse } from '../../models/auth-response';
 import { AuthService } from '../../services/auth/auth.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
 

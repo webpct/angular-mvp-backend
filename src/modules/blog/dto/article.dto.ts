@@ -8,6 +8,7 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 import { validate as validateUUID} from 'uuid';
+import { ApiProperty } from '@nestjs/swagger';
 
 interface Section {
   title?: string,
@@ -48,9 +49,29 @@ const nameErrorContext = (message) => ({
 })
 
 export class ArticleDTO {
+
+  @ApiProperty({
+    required: true,
+    example: "Article title",
+    description: 'The title of an article'
+  })
+
   @MinLength(3, nameErrorContext('Tag name should be more than 3 characters'))
   @IsString(nameErrorContext('Tag name should be string'))
   title: string;
+
+
+  @ApiProperty({
+    isArray: true,
+    example: [{
+      title: 'Subtitle',
+      text: 'text'
+    }, {
+      text: 'text'
+    }],
+    required: true,
+    description: 'Article sections'
+  })
 
   @Validate(SectionsLength, [],{
     each: true,
@@ -61,6 +82,13 @@ export class ArticleDTO {
   @ArrayNotEmpty()
   @IsArray()
   sections: Section[]
+
+  @ApiProperty({
+    isArray: true,
+    example: ['id1'],
+    required: true,
+    description: 'Array of tag\'s id for article'
+  })
 
   @Validate(IsUUID, {
     each: true
