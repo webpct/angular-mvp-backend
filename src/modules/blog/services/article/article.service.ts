@@ -11,7 +11,9 @@ import { literal, Op, WhereOptions } from 'sequelize';
 
 export interface FindAllOptions {
   search: string,
-  tags: string[]
+  tags: string[],
+  page: number,
+  perPage: number
 }
 
 @Injectable()
@@ -24,7 +26,7 @@ export class ArticleService {
     private sequelize: Sequelize
   ) {}
 
-  async findAll({ search = '', tags = [] }: FindAllOptions) {
+  async findAll({ search = '', tags = [], page = 1, perPage = 10 }: FindAllOptions) {
     const where: WhereOptions = {
       title: {
         [Op.iLike]: `%${search}%`
@@ -43,15 +45,25 @@ export class ArticleService {
           )`)
       }
     }
-    const result = await this.articleModel.findAll({
+    const result = await this.articleModel.findAndCountAll({
       include: [
         ArticleSection,
         User,
         Tag,
       ],
-      where
+      where,
+      distinct: true,
+      limit: perPage,
+      offset: (page-1)*perPage
     });
-    return result || [];
+
+    return {
+      perPage,
+      page,
+      entities: result.rows,
+      totalCount: result.count,
+      totalPages: Math.ceil(result.count || 1 / perPage)
+    };
   }
 
   async findById(id: string) {

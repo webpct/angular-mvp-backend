@@ -12,10 +12,17 @@ export class ArticlesController {
 
   @Get()
   @Public()
-  async get(@Query('search') search: string, @Query('tags') tags: string[]) {
+  async get(
+    @Query('search') search: string,
+    @Query('tags') tags: string[],
+    @Query('page') page: string = '1',
+    @Query('perPage') perPage: string = '10'
+  ) {
     return this.articleService.findAll({
       search,
-      tags
+      tags,
+        page: +page,
+      perPage: +perPage
     });
   }
 
