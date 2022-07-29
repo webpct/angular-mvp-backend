@@ -12,7 +12,7 @@ export class GoogleStrategy extends PassportStrategy(OAuth2Strategy, 'google') {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_SECRET,
-        callbackURL: 'http://localhost:3000/auth/login',
+        callbackURL: `${process.env.HOST}/auth/login`,
         scope: ['email', 'profile'],
       },
     );
