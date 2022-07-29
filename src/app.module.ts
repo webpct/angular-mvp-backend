@@ -22,6 +22,10 @@ import { ArticlesTags } from '@models/article-tag.model';
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       models: [Article, ArticleSection, Tag, User, ArticlesTags],
+      dialectOptions: {
+        require: true,
+        "rejectUnauthorized": false
+      },
     }),
     AuthModule,
     BlogModule
