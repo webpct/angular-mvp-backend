@@ -23,8 +23,10 @@ import { ArticlesTags } from '@models/article-tag.model';
       database: process.env.DATABASE_NAME,
       models: [Article, ArticleSection, Tag, User, ArticlesTags],
       dialectOptions: {
-        require: true,
-        "rejectUnauthorized": false
+        "ssl": {
+          "require": true,
+          "rejectUnauthorized": false
+        }
       },
     }),
     AuthModule,
